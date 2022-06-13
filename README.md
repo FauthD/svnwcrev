@@ -14,11 +14,21 @@ Looks like my copies are the latest that can be found in the net. Therefore I
 think it is just fair to share what I've got.
 
 ## Similar tools
+One of these might replace svnwcrev.
+
+- Python tool, looks very promising https://github.com/nickveys/pysubwcrev
+
+- Python tool, good for git-svn https://github.com/eibach/subwcrev-git
+
+- Similar tool for git, written in csharp https://github.com/realloc-dev/gitrev
+
+- Similar tool for git, written in Rust https://github.com/kubkon/gitrev
+
 - There is a python program used by the Freecad team internally.
-Could be a good start for a new tool. Misses many keywords.
+Could be a good start for a new tool. Misses many keywords though.
 https://github.com/FreeCAD/FreeCAD/blob/master/src/Tools/SubWCRev.py
 
-- And I also found SvnRev, but htis is qutie different from SubWCRev.
+- And I also found SvnRev, but this is quite different from SubWCRev.
 https://www.compuphase.com/svnrev.htm
 
 - This shell script might also fit your needs if you only need the revision.
@@ -26,7 +36,6 @@ Found at
 https://stackoverflow.com/questions/62160158/searching-old-code-that-was-hosted-on-tigris-org-svnwcrev-1-0-tar-gz
 
 		printf '{"%s","%d",""}' $(svn info $1 --show-item=url) $(svn info $1 --show-item=revision)
-
 ## Build on Ubuntu (20.04)
 
 - sudo apt install libsvn-dev (currently this is version 1.13.0-3ubuntu0.2)
