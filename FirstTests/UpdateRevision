@@ -1,0 +1,12 @@
+#!/bin/bash
+# ensure we are in the right directory (where this script and *.tmpl are located)
+cd -P -- "$(dirname -- "$0")"
+
+# Create a header file that can be used by C/C++
+svnwcrev .. svn_rev.tmpl svn_rev.h
+
+# Create a batch file that can be used on Windows
+svnwcrev .. RevisionForBat.tmpl RevisionForBat.bat
+
+# Create a script file that can be used for bash
+svnwcrev .. RevisionForShell.tmpl RevisionForShell.sh

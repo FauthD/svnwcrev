@@ -1,0 +1,22 @@
+// Template file for SubWCRev/svnwcrev
+// Just a demo of some possibilities.
+
+#pragma once
+
+#define SVN_Revision $WCDATE=%Y,%m$,$WCREV$
+#define SVN_RevisionStr "$WCDATE=%Y.%m$.$WCREV$$WCMODS?M:$"
+
+#define SVN_Modified "$WCMODS?Modified:Not modified$"
+#define SVN_M		 "$WCMODS?M:$"
+#define SVN_Date     "$WCDATE$"
+
+#define SVN_RevRange "$WCRANGE$"
+#define SVN_Mixed    "$WCMIXED?Mixed revision WC:Not mixed$"
+
+#define PROJECT_NAME "svnwcrev demo"
+#define COMPANY_NAME "no company"
+#define COPYRIGHT "(c) All rights reserved."
+
+#define URL	"$WCURL$"
+#define NOW	"$WCNOW$"
+
