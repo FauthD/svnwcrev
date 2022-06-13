@@ -11,12 +11,17 @@ even when they are binary files. That triggered to look for updates, just to
 find out that tigris is dead since 2020.
 
 Looks like my copies are the latest that can be found in the net. Therefore I 
-think it is just fair to share what I've got.
+think it is just fair to share what I've got. At least for documentation purposes.
+I do not use that code anymore and will probably not fix anything in it. See
+https://github.com/FauthD/pysubwcrev for a better solution.
 
 ## Similar tools
 One of these might replace svnwcrev.
-
-- Python tool, looked promising at first sight but is many years old and written in Python2 https://github.com/nickveys/pysubwcrev
+- Python3 tool, __https://github.com/FauthD/pysubwcrev__
+  forked from https://github.com/nickveys/pysubwcrev and adjusted to Python3.
+  
+  __This is my answer to the UTF-8 issues described below.__
+  That tool worked fine in my test so far and I rather fix an issue in this python code if one shows up.
 
 - Python tool, good for git-svn https://github.com/eibach/subwcrev-git
 
