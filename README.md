@@ -16,7 +16,7 @@ think it is just fair to share what I've got.
 ## Similar tools
 One of these might replace svnwcrev.
 
-- Python tool, looks very promising https://github.com/nickveys/pysubwcrev
+- Python tool, looked promising at first sight but is many years old and written in Python2 https://github.com/nickveys/pysubwcrev
 
 - Python tool, good for git-svn https://github.com/eibach/subwcrev-git
 
