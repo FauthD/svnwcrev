@@ -1,0 +1,8 @@
+This file collects open issues.
+
+1)	Not all keywords supported by SubWcRev.exe are implemented.
+2)	Filenames with non-ASCII characters will make svnwcrev fail.
+3)	Fixed in r15: The path parameter has issues.
+	. works, .. does not
+	A workaround can be '../../DIRNAME' which is not too nice.
+4)	Some deprecated functions of subversion are used.

@@ -1,0 +1,201 @@
+This document tries to explain the steps to build and install for Ubuntu.
+Specific Ubuntu 14.04.1 Trusty was used for this.
+
+Requirements
+	1)	Install the libraries and subversion.
+		sudo apt-get install subversion libsvn-dev libsvn-doc libsvn1 libapr1-dev libapr1
+
+	2)	Get source code (if not done yet), create the config.mk
+		cd YOUR_PROJECT_DIR
+		svn checkout http://svnwcrev.tigris.org/svn/svnwcrev/trunk svnwcrev --username guest
+		cd svnwcrev
+		cp config_mk.ubuntu_template config.mk
+
+	3) Run "make"
+		make
+
+	4) There should be an executable named "svnwcrev" in the root folder now.
+		Place it anywhere in your PATH.
+		sudo cp svnwcrev /usr/local/bin
+
+	5) Optional, create links with same name as Windows version SubWcRev.exe
+		This is only required if you want to share makefiles etc. between the platforms.
+		sudo ln -s /usr/local/bin/svnwcrev /usr/local/bin/subwcrev
+		sudo ln -s /usr/local/bin/svnwcrev /usr/local/bin/SubWcRev
+		sudo ln -s /usr/local/bin/svnwcrev /usr/local/bin/SubWcRev.exe
+
+	6) Test with the script FirstTests/UpdateRevision.
+		You might need to set the execution rights first.
+		chmod +x FirstTests/UpdateRevision
+
+		The script reads some .tmpl files and creates a C/C++ header, a .bat and .sh file. These are just examples.
+		Never ever commit the created files. They would trigger the "modified" flag.
+
+
+Hint:
+There exists a PPA for newer version of subversion for the ones that need/want the latest subversion.
+	http://ppa.launchpad.net/dominik-stadler/subversion-1.8
+
+Please also read the Errata.txt!
+
+
+Build log:
+15:28:55 **** Build of project svnwcrev ****
+make -k all 
+default.mk:16: src/status.d: No such file or directory
+default.mk:16: src/SVNWcRev.d: No such file or directory
+g++ -E -MM -I/usr/include/subversion-1 -I/usr/include/apr-1.0 -MT "src/SVNWcRev.o src/SVNWcRev.d " src/SVNWcRev.cpp > src/SVNWcRev.d;
+g++ -E -MM -I/usr/include/subversion-1 -I/usr/include/apr-1.0 -MT "src/status.o src/status.d " src/status.cpp > src/status.d;
+( /bin/echo -ne "\x23define SVNWCREV_VERSION \x221.1, Build "; svnversion -n .; /bin/echo -e "\x22" )> src/version.h
+g++ -E -MM -I/usr/include/subversion-1 -I/usr/include/apr-1.0 -MT "src/SVNWcRev.o src/SVNWcRev.d " src/SVNWcRev.cpp > src/SVNWcRev.d;
+g++ -g3 -I/usr/include/subversion-1 -I/usr/include/apr-1.0  -c -o src/status.o src/status.cpp
+src/status.cpp: In function ‘svn_error_t* svn_status(const char*, void*, svn_boolean_t, svn_client_ctx_t*, apr_pool_t*)’:
+src/status.cpp:155:44: warning: ‘svn_wc_traversal_info_t* svn_wc_init_traversal_info(apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:718) [-Wdeprecated-declarations]
+  svn_wc_traversal_info_t *traversal_info = svn_wc_init_traversal_info (pool);
+                                            ^
+src/status.cpp:155:76: warning: ‘svn_wc_traversal_info_t* svn_wc_init_traversal_info(apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:718) [-Wdeprecated-declarations]
+  svn_wc_traversal_info_t *traversal_info = svn_wc_init_traversal_info (pool);
+                                                                            ^
+src/status.cpp:166:2: warning: ‘void svn_utf_initialize(apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_utf.h:77) [-Wdeprecated-declarations]
+  svn_utf_initialize(pool);
+  ^
+src/status.cpp:166:25: warning: ‘void svn_utf_initialize(apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_utf.h:77) [-Wdeprecated-declarations]
+  svn_utf_initialize(pool);
+                         ^
+In file included from /usr/include/subversion-1/svn_types.h:1284:0,
+                 from /usr/include/subversion-1/svn_client.h:42,
+                 from src/status.cpp:22:
+src/status.cpp:170:11: warning: ‘svn_error_t* svn_wc_adm_probe_open3(svn_wc_adm_access_t**, svn_wc_adm_access_t*, const char*, svn_boolean_t, int, svn_cancel_func_t, void*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:343) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_adm_probe_open3 (&adm_access, NULL, path, FALSE, 0, NULL, NULL, pool));
+           ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:170:86: warning: ‘svn_error_t* svn_wc_adm_probe_open3(svn_wc_adm_access_t**, svn_wc_adm_access_t*, const char*, svn_boolean_t, int, svn_cancel_func_t, void*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:343) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_adm_probe_open3 (&adm_access, NULL, path, FALSE, 0, NULL, NULL, pool));
+                                                                                      ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:175:11: warning: ‘svn_error_t* svn_wc_entry(const svn_wc_entry_t**, const char*, svn_wc_adm_access_t*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:3046) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_entry (&entry, path, adm_access, FALSE, pool));
+           ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:175:62: warning: ‘svn_error_t* svn_wc_entry(const svn_wc_entry_t**, const char*, svn_wc_adm_access_t*, svn_boolean_t, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:3046) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_entry (&entry, path, adm_access, FALSE, pool));
+                                                              ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:178:12: warning: ‘svn_error_t* svn_wc_get_actual_target(const char*, const char**, const char**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:5556) [-Wdeprecated-declarations]
+   SVN_ERR (svn_wc_get_actual_target (path, &anchor, &target, pool));
+            ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:178:66: warning: ‘svn_error_t* svn_wc_get_actual_target(const char*, const char**, const char**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:5556) [-Wdeprecated-declarations]
+   SVN_ERR (svn_wc_get_actual_target (path, &anchor, &target, pool));
+                                                                  ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:187:3: warning: ‘void svn_path_split(const char*, const char**, const char**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_path.h:241) [-Wdeprecated-declarations]
+   svn_path_split (path, &anchor, &target, pool);
+   ^
+src/status.cpp:187:47: warning: ‘void svn_path_split(const char*, const char**, const char**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_path.h:241) [-Wdeprecated-declarations]
+   svn_path_split (path, &anchor, &target, pool);
+                                               ^
+In file included from /usr/include/subversion-1/svn_types.h:1284:0,
+                 from /usr/include/subversion-1/svn_client.h:42,
+                 from src/status.cpp:22:
+src/status.cpp:192:11: warning: ‘svn_error_t* svn_wc_adm_close(svn_wc_adm_access_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:545) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_adm_close (adm_access));
+           ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:192:39: warning: ‘svn_error_t* svn_wc_adm_close(svn_wc_adm_access_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:545) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_adm_close (adm_access));
+                                       ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:196:11: warning: ‘svn_error_t* svn_wc_adm_probe_open3(svn_wc_adm_access_t**, svn_wc_adm_access_t*, const char*, svn_boolean_t, int, svn_cancel_func_t, void*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:343) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_adm_probe_open3 (&adm_access, NULL, anchor, FALSE, -1, NULL, NULL, pool));
+           ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:196:89: warning: ‘svn_error_t* svn_wc_adm_probe_open3(svn_wc_adm_access_t**, svn_wc_adm_access_t*, const char*, svn_boolean_t, int, svn_cancel_func_t, void*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:343) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_adm_probe_open3 (&adm_access, NULL, anchor, FALSE, -1, NULL, NULL, pool));
+                                                                                         ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:200:11: warning: ‘svn_error_t* svn_wc_get_status_editor2(const svn_delta_editor_t**, void**, void**, svn_revnum_t*, svn_wc_adm_access_t*, const char*, apr_hash_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_wc_status_func2_t, void*, svn_cancel_func_t, void*, svn_wc_traversal_info_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:4263) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_get_status_editor2 (&editor, &edit_baton, NULL, &edit_revision,
+           ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:204:33: warning: ‘svn_error_t* svn_wc_get_status_editor2(const svn_delta_editor_t**, void**, void**, svn_revnum_t*, svn_wc_adm_access_t*, const char*, apr_hash_t*, svn_boolean_t, svn_boolean_t, svn_boolean_t, svn_wc_status_func2_t, void*, svn_cancel_func_t, void*, svn_wc_traversal_info_t*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:4263) [-Wdeprecated-declarations]
+             traversal_info, pool));
+                                 ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:208:11: warning: ‘svn_error_t* svn_wc_adm_close(svn_wc_adm_access_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:545) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_adm_close (adm_access));
+           ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+src/status.cpp:208:39: warning: ‘svn_error_t* svn_wc_adm_close(svn_wc_adm_access_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_wc.h:545) [-Wdeprecated-declarations]
+  SVN_ERR (svn_wc_adm_close (adm_access));
+                                       ^
+/usr/include/subversion-1/svn_error.h:333:35: note: in definition of macro ‘SVN_ERR’
+     svn_error_t *svn_err__temp = (expr);        \
+                                   ^
+g++ -g3 -I/usr/include/subversion-1 -I/usr/include/apr-1.0  -c -o src/SVNWcRev.o src/SVNWcRev.cpp
+src/SVNWcRev.cpp: In function ‘int InsertRevision(char*, char*, size_t&, size_t&, size_t, long int, long int, SubWCRev_t*)’:
+src/SVNWcRev.cpp:181:51: warning: format ‘%LX’ expects argument of type ‘long long unsigned int’, but argument 3 has type ‘long int’ [-Wformat=]
+        sprintf(destbuf, "%LX", (apr_int64_t)MaxRev);
+                                                   ^
+src/SVNWcRev.cpp:183:52: warning: format ‘%LX’ expects argument of type ‘long long unsigned int’, but argument 3 has type ‘long int’ [-Wformat=]
+        sprintf(destbuf, "%#LX", (apr_int64_t)MaxRev);
+                                                    ^
+src/SVNWcRev.cpp:185:51: warning: format ‘%Ld’ expects argument of type ‘long long int’, but argument 3 has type ‘long int’ [-Wformat=]
+        sprintf(destbuf, "%Ld", (apr_int64_t)MaxRev);
+                                                   ^
+src/SVNWcRev.cpp:190:74: warning: format ‘%LX’ expects argument of type ‘long long unsigned int’, but argument 3 has type ‘long int’ [-Wformat=]
+      sprintf(destbuf, "%LX:%LX", (apr_int64_t)MinRev, (apr_int64_t)MaxRev);
+                                                                          ^
+src/SVNWcRev.cpp:190:74: warning: format ‘%LX’ expects argument of type ‘long long unsigned int’, but argument 4 has type ‘long int’ [-Wformat=]
+src/SVNWcRev.cpp:192:83: warning: format ‘%LX’ expects argument of type ‘long long unsigned int’, but argument 3 has type ‘long int’ [-Wformat=]
+             sprintf(destbuf, "%#LX:%#LX", (apr_int64_t)MinRev, (apr_int64_t)MaxRev);
+                                                                                   ^
+src/SVNWcRev.cpp:192:83: warning: format ‘%LX’ expects argument of type ‘long long unsigned int’, but argument 4 has type ‘long int’ [-Wformat=]
+src/SVNWcRev.cpp:194:74: warning: format ‘%Ld’ expects argument of type ‘long long int’, but argument 3 has type ‘long int’ [-Wformat=]
+      sprintf(destbuf, "%Ld:%Ld", (apr_int64_t)MinRev, (apr_int64_t)MaxRev);
+                                                                          ^
+src/SVNWcRev.cpp:194:74: warning: format ‘%Ld’ expects argument of type ‘long long int’, but argument 4 has type ‘long int’ [-Wformat=]
+src/SVNWcRev.cpp: In function ‘int main(int, char**)’:
+src/SVNWcRev.cpp:564:2: warning: ‘svn_error_t* svn_client_create_context(svn_client_ctx_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1048) [-Wdeprecated-declarations]
+  svn_client_create_context(&ctx, pool);
+  ^
+src/SVNWcRev.cpp:564:38: warning: ‘svn_error_t* svn_client_create_context(svn_client_ctx_t**, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_client.h:1048) [-Wdeprecated-declarations]
+  svn_client_create_context(&ctx, pool);
+                                      ^
+src/SVNWcRev.cpp:586:17: warning: ‘const char* svn_path_internal_style(const char*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_path.h:73) [-Wdeprecated-declarations]
+  internalpath = svn_path_internal_style (utf8Path, pool);
+                 ^
+src/SVNWcRev.cpp:586:56: warning: ‘const char* svn_path_internal_style(const char*, apr_pool_t*)’ is deprecated (declared at /usr/include/subversion-1/svn_path.h:73) [-Wdeprecated-declarations]
+  internalpath = svn_path_internal_style (utf8Path, pool);
+                                                        ^
+g++ -o svnwcrev src/status.o src/SVNWcRev.o -lpthread -L/usr/lib -lsvn_client-1 -lsvn_wc-1 -lsvn_subr-1 -lapr-1
+
+15:28:56 Build Finished (took 759ms)
+
+
